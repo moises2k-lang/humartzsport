@@ -22,12 +22,19 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger
-        className={cn(buttonVariants({ variant: "ghost" }), "relative")}
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "relative flex items-center gap-2 rounded-sm bg-yellow-400 px-3 py-1 text-black hover:bg-yellow-300"
+        )}
         aria-label="Carrito"
       >
         <ShoppingCart className="h-5 w-5" />
+        <div className="hidden flex-col items-start text-xs leading-tight sm:flex">
+          <span className="font-bold uppercase">Tu Cesta {count}</span>
+          <span>MXN {formatPrice(total)}</span>
+        </div>
         {count > 0 && (
-          <Badge className="absolute -right-2 -top-2 h-5 w-5 justify-center rounded-full p-0">
+          <Badge className="absolute -right-2 -top-2 h-5 w-5 justify-center rounded-full p-0 bg-black text-white">
             {count}
           </Badge>
         )}

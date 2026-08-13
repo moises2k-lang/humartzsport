@@ -4,7 +4,19 @@ import { Pool } from "pg";
 import { parse } from "pg-connection-string";
 
 const connectionString = process.env.DATABASE_URL ?? "";
-const parsed = parse(connectionString);
+const cleanConnectionString = (() => {
+  if (!connectionString) return "";
+  try {
+    const url = new URL(connectionString);
+    url.searchParams.delete("sslmode");
+    url.searchParams.delete("ssl");
+    url.searchParams.delete("uselibpqcompat");
+    return url.toString();
+  } catch {
+    return connectionString;
+  }
+})();
+const parsed = parse(cleanConnectionString);
 const pool = new Pool({
   host: parsed.host ?? undefined,
   port: parsed.port ? Number(parsed.port) : undefined,

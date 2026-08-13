@@ -2,77 +2,120 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
+import { useState, useEffect, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
 const slides = [
   {
     id: 1,
-    title: "Nueva Colección Deportiva",
-    subtitle: "Descubre los mejores tenis para entrenar o salir",
-    image: "https://placehold.co/1200x400/1d4ed8/ffffff.png?text=Nueva+Colección",
-    cta: "Ver productos",
+    title: "LOREM IPSUM",
+    subtitle: "LOREM IPSUM DOLOR SIT",
+    subtext: "LOREM IPSUM DOLOR SIT",
+    image: "https://images.unsplash.com/photo-1578876705807-e01cbf4f14bd?auto=format&fit=crop&w=800&q=80",
+    cta: "VER PRODUCTO",
     href: "/categoria/hombre",
   },
   {
     id: 2,
-    title: "Envío Gratis en Compras Mayores",
-    subtitle: "Aprovecha nuestras promociones y artículos gratuitos",
-    image: "https://placehold.co/1200x400/0f766e/ffffff.png?text=Envío+Gratis",
-    cta: "Ver promociones",
+    title: "NUEVA COLECCIÓN",
+    subtitle: "CALZADO PARA TODA LA FAMILIA",
+    subtext: "DESCUBRE LOS MEJORES MODELOS",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+    cta: "VER PRODUCTO",
     href: "/categoria/mujer",
   },
   {
     id: 3,
-    title: "Calzado para Toda la Familia",
-    subtitle: "Niños, jóvenes y adultos. Encuentra tu talla ideal.",
-    image: "https://placehold.co/1200x400/b45309/ffffff.png?text=Para+Toda+la+Familia",
-    cta: "Comprar ahora",
+    title: "PROMOCIONES",
+    subtitle: "ARTÍCULOS GRATUITOS Y MÁS",
+    subtext: "APROVECHA NUESTRAS OFERTAS",
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80",
+    cta: "VER PRODUCTO",
     href: "/categoria/ninos",
   },
 ];
 
 export function HeroSlider() {
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => {
+    setCurrent((i) => (i + 1) % slides.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setCurrent((i) => (i - 1 + slides.length) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(next, 5000);
+    return () => clearInterval(id);
+  }, [next]);
+
+  const slide = slides[current];
+
   return (
-    <section className="container py-4">
-      <Carousel className="w-full">
-        <CarouselContent>
-          {slides.map((slide) => (
-            <CarouselItem key={slide.id}>
-              <div className="relative h-[260px] w-full overflow-hidden rounded-xl md:h-[360px]">
-                <Image
-                  src={slide.image}
-                  alt={slide.title}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="100vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
-                <div className="absolute inset-0 flex flex-col justify-center p-6 md:p-12 text-white">
-                  <h2 className="max-w-md text-2xl font-bold md:text-4xl">{slide.title}</h2>
-                  <p className="mt-2 max-w-md text-sm md:text-base">{slide.subtitle}</p>
-                  <Link
-                    href={slide.href}
-                    className={cn(buttonVariants({ variant: "default" }), "mt-4 w-fit bg-white text-black hover:bg-white/90")}
-                  >
-                    {slide.cta}
-                  </Link>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="left-2 hidden md:flex" />
-        <CarouselNext className="right-2 hidden md:flex" />
-      </Carousel>
+    <section className="relative bg-[#e5e5e5] overflow-hidden">
+      <div className="container relative flex min-h-[340px] items-center md:min-h-[420px]">
+        <div className="grid w-full grid-cols-1 items-center gap-6 py-8 md:grid-cols-2 md:py-0">
+          <div className="z-10 order-2 md:order-1">
+            <h2 className="text-3xl font-bold uppercase tracking-wide text-foreground md:text-5xl">
+              {slide.title}
+            </h2>
+            <p className="mt-2 text-lg font-medium text-muted-foreground uppercase md:text-xl">
+              {slide.subtitle}
+            </p>
+            <p className="mt-1 text-base text-muted-foreground uppercase">
+              {slide.subtext}
+            </p>
+            <Link href={slide.href}>
+              <Button className="mt-6 rounded-sm bg-primary px-6 py-2 font-bold uppercase text-primary-foreground hover:bg-primary/90">
+                {slide.cta}
+              </Button>
+            </Link>
+          </div>
+          <div className="relative order-1 flex h-48 items-center justify-center md:order-2 md:h-80">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              width={600}
+              height={400}
+              className="max-h-full w-auto object-contain drop-shadow-lg transition-opacity duration-500"
+              priority
+            />
+          </div>
+        </div>
+
+        <button
+          onClick={prev}
+          aria-label="Anterior"
+          className="absolute left-0 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          onClick={next}
+          aria-label="Siguiente"
+          className="absolute right-0 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+      </div>
+
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Ir al slide ${i + 1}`}
+            className={cn(
+              "h-3 w-3 rounded-full border border-black/30 transition-colors",
+              i === current ? "bg-primary border-primary" : "bg-white hover:bg-primary/50"
+            )}
+          />
+        ))}
+      </div>
     </section>
   );
 }

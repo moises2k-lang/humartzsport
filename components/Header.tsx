@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Menu, ChevronDown, User } from "lucide-react";
+import { FacebookIcon, YoutubeIcon, TwitterIcon, InstagramIcon } from "@/components/SocialIcons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -37,13 +39,25 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b bg-white">
       {/* Top bar */}
-      <div className="bg-primary text-primary-foreground py-1.5 text-center text-xs">
-        Envío gratis en compras mayores a $1,500 MXN · Atención WhatsApp 55 1234 5678
+      <div className="bg-black text-white">
+        <div className="container flex h-8 items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
+            <Link href="#" aria-label="Facebook" className="hover:text-primary"><FacebookIcon className="h-4 w-4" /></Link>
+            <Link href="#" aria-label="YouTube" className="hover:text-primary"><YoutubeIcon className="h-4 w-4" /></Link>
+            <Link href="#" aria-label="Twitter" className="hover:text-primary"><TwitterIcon className="h-4 w-4" /></Link>
+            <Link href="#" aria-label="Instagram" className="hover:text-primary"><InstagramIcon className="h-4 w-4" /></Link>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link href="/login" className="hover:underline">Ingresar</Link>
+            <span>|</span>
+            <Link href="/login" className="hover:underline">Crear cuenta</Link>
+          </div>
+        </div>
       </div>
 
-      <div className="container flex h-16 items-center gap-4">
+      <div className="container flex h-20 items-center gap-4 py-3">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger
             className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "lg:hidden")}
@@ -53,8 +67,8 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
           </SheetTrigger>
           <SheetContent side="left" className="w-[280px]">
             <div className="flex flex-col gap-4 pt-4">
-              <Link href="/" className="text-xl font-bold" onClick={() => setMobileOpen(false)}>
-                HUMARTZ SPORT
+              <Link href="/" onClick={() => setMobileOpen(false)}>
+                <Image src="/logo.png" alt="Humartz Sport" width={160} height={60} className="h-12 w-auto" />
               </Link>
               {topCategories.map((cat) => (
                 <Link
@@ -73,17 +87,19 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
           </SheetContent>
         </Sheet>
 
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
-          HUMARTZ <span className="text-primary">SPORT</span>
+        <Link href="/" className="shrink-0">
+          <Image src="/logo.png" alt="Humartz Sport" width={180} height={70} className="h-14 w-auto" priority />
         </Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger
-            className={cn(buttonVariants({ variant: "ghost" }), "hidden lg:flex gap-1")}
+            className={cn(buttonVariants({ variant: "default" }), "hidden lg:inline-flex gap-2 rounded-none bg-primary text-primary-foreground hover:bg-primary/90 uppercase font-bold tracking-wide")}
           >
-            Categorías <ChevronDown className="h-4 w-4" />
+            <Menu className="h-4 w-4" />
+            Categorías
+            <ChevronDown className="h-4 w-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48">
+          <DropdownMenuContent className="w-56">
             {topCategories.map((cat) => (
               <DropdownMenuItem
                 key={cat.id}
@@ -95,15 +111,15 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <form onSubmit={onSearch} className="hidden flex-1 items-center gap-2 md:flex">
+        <form onSubmit={onSearch} className="hidden flex-1 items-stretch md:flex max-w-xl">
           <Input
             type="search"
-            placeholder="Buscar productos..."
+            placeholder="Buscar..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="max-w-md"
+            className="h-10 rounded-none rounded-l-md border-r-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           />
-          <Button type="submit" size="icon" variant="ghost">
+          <Button type="submit" className="h-10 rounded-none rounded-r-md bg-primary px-4 text-primary-foreground hover:bg-primary/90">
             <Search className="h-4 w-4" />
           </Button>
         </form>
@@ -128,21 +144,6 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
           <CartSheet />
         </div>
       </div>
-
-      {/* Sub categories bar */}
-      <nav className="hidden lg:block border-t bg-muted/40">
-        <div className="container flex h-10 items-center gap-6 text-sm">
-          {topCategories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/categoria/${cat.slug}`}
-              className="font-medium hover:text-primary"
-            >
-              {cat.name}
-            </Link>
-          ))}
-        </div>
-      </nav>
     </header>
   );
 }
