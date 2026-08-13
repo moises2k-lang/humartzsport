@@ -27,7 +27,7 @@ export function ProductDetail({ product }: { product: ProductDetail }) {
   const images =
     product.images.length > 0
       ? product.images.map((i) => i.url)
-      : [product.image || "https://placehold.co/600x600/e2e8f0/1e293b?text=Sin+imagen"];
+      : [product.image || "https://placehold.co/600x600/e2e8f0/1e293b.png?text=Sin+imagen"];
 
   const [mainImage, setMainImage] = useState(images[0]);
 

@@ -12,7 +12,7 @@ const categoryData = [
 ];
 
 function placeholder(text: string, bg = "1d4ed8") {
-  return `https://placehold.co/600x400/${bg}/ffffff?text=${encodeURIComponent(text)}`;
+  return `https://placehold.co/600x400/${bg}/ffffff.png?text=${encodeURIComponent(text)}`;
 }
 
 const productTemplates = [

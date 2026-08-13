@@ -19,7 +19,7 @@ export function ProductCard({
   const { addItem } = useCart();
   const variant = product.variants[0];
   const finalPrice = product.isFree ? 0 : product.price + (variant?.priceAdjustment ?? 0);
-  const image = product.images[0]?.url || product.image || "https://placehold.co/400x300/e2e8f0/1e293b?text=Sin+imagen";
+  const image = product.images[0]?.url || product.image || "https://placehold.co/400x300/e2e8f0/1e293b.png?text=Sin+imagen";
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
