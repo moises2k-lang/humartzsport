@@ -6,7 +6,7 @@ const secret = new TextEncoder().encode(
   process.env.NEXTAUTH_SECRET ?? "change-me"
 );
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const token = request.cookies.get("admin-token")?.value;
 
   if (!token) {
