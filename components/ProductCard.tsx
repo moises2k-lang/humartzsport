@@ -92,7 +92,7 @@ export function ProductCard({
         </div>
         {variant && (variant.size || variant.color) && (
           <p className="mt-1 text-[10px] text-muted-foreground uppercase">
-            {variant.size && `Talla: ${variant.size}`} {variant.color && `Color: ${variant.color}`} · Stock: {variant.stock}
+            {variant.size && `Talla: ${variant.size}`}{" "}{variant.color && `Color: ${variant.color}`} · Stock: {variant.stock}
           </p>
         )}
         <Button onClick={handleAdd} className="mt-3 w-full rounded-sm bg-primary text-xs font-bold uppercase text-primary-foreground hover:bg-primary/90" size="sm">
@@ -126,7 +126,7 @@ export function ProductCard({
             </div>
             {variant && (variant.size || variant.color) && (
               <p className="mt-1 text-xs text-muted-foreground uppercase">
-                {variant.size && `Talla: ${variant.size}`} {variant.color && `Color: ${variant.color}`} · Stock: {variant.stock}
+                {variant.size && `Talla: ${variant.size}`}{" "}{variant.color && `Color: ${variant.color}`} · Stock: {variant.stock}
               </p>
             )}
           </div>
