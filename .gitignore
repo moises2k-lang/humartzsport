@@ -42,4 +42,10 @@ yarn-error.log*
 # generated prisma client
 /lib/generated/prisma
 
-.vercel
+# devin meta
+.agents
+.claude
+.windsurf
+AGENTS.md
+CLAUDE.md
+skills-lock.json
