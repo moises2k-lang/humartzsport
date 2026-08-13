@@ -30,7 +30,7 @@ export function CartSheet() {
       >
         <ShoppingCart className="h-5 w-5" />
         <div className="hidden flex-col items-start text-xs leading-tight sm:flex">
-          <span className="font-bold uppercase">Tu Cesta {count}</span>
+          <span className="font-bold uppercase">Tu Cesta{"\u00a0"}{count}</span>
           <span>MXN {new Intl.NumberFormat("es-MX", { minimumFractionDigits: 2 }).format(total)}</span>
         </div>
         {count > 0 && (

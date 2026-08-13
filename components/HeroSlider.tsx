@@ -58,7 +58,7 @@ export function HeroSlider() {
   return (
     <section className="relative bg-[#e5e5e5] overflow-hidden">
       <div className="container relative flex min-h-[340px] items-center md:min-h-[420px]">
-        <div className="grid w-full grid-cols-1 items-center gap-6 py-8 md:grid-cols-2 md:py-0">
+        <div className="grid w-full grid-cols-1 items-center gap-6 py-8 px-2 md:grid-cols-2 md:py-0 md:px-10">
           <div className="z-10 order-2 md:order-1">
             <h2 className="text-3xl font-bold uppercase tracking-wide text-foreground md:text-5xl">
               {slide.title}
@@ -75,14 +75,14 @@ export function HeroSlider() {
               </Button>
             </Link>
           </div>
-          <div className="relative order-1 flex h-48 items-center justify-center md:order-2 md:h-80">
+          <div className="relative order-1 h-48 md:order-2 md:h-80">
             <Image
               src={slide.image}
               alt={slide.title}
-              width={600}
-              height={400}
-              className="max-h-full w-auto object-contain drop-shadow-lg transition-opacity duration-500"
+              fill
+              className="object-contain drop-shadow-lg transition-opacity duration-500"
               priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         </div>
@@ -90,16 +90,16 @@ export function HeroSlider() {
         <button
           onClick={prev}
           aria-label="Anterior"
-          className="absolute -left-12 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+          className="absolute left-2 top-1/2 z-20 hidden h-10 w-8 -translate-y-1/2 items-center justify-center bg-black/40 text-white hover:bg-black/60 md:flex"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           onClick={next}
           aria-label="Siguiente"
-          className="absolute -right-12 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+          className="absolute right-2 top-1/2 z-20 hidden h-10 w-8 -translate-y-1/2 items-center justify-center bg-black/40 text-white hover:bg-black/60 md:flex"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       </div>
 
