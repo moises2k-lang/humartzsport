@@ -11,8 +11,8 @@ const categoryData = [
   { name: "Fútbol", slug: "futbol" },
 ];
 
-function placeholder(text: string, bg = "1d4ed8") {
-  return `https://placehold.co/600x400/${bg}/ffffff.png?text=${encodeURIComponent(text)}`;
+function placeholder(text: string, bg = "e5e7eb") {
+  return `https://placehold.co/600x400/${bg}/374151.png?text=${encodeURIComponent(text)}`;
 }
 
 const productTemplates = [
