@@ -90,14 +90,14 @@ export function HeroSlider() {
         <button
           onClick={prev}
           aria-label="Anterior"
-          className="absolute left-0 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+          className="absolute -left-12 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
         <button
           onClick={next}
           aria-label="Siguiente"
-          className="absolute right-0 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
+          className="absolute -right-12 top-1/2 z-20 hidden h-14 w-10 -translate-y-1/2 items-center justify-center bg-black/50 text-white hover:bg-black/70 md:flex"
         >
           <ChevronRight className="h-6 w-6" />
         </button>

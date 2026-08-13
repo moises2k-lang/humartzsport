@@ -31,7 +31,7 @@ export function CartSheet() {
         <ShoppingCart className="h-5 w-5" />
         <div className="hidden flex-col items-start text-xs leading-tight sm:flex">
           <span className="font-bold uppercase">Tu Cesta {count}</span>
-          <span>MXN {formatPrice(total)}</span>
+          <span>MXN {new Intl.NumberFormat("es-MX", { minimumFractionDigits: 2 }).format(total)}</span>
         </div>
         {count > 0 && (
           <Badge className="absolute -right-2 -top-2 h-5 w-5 justify-center rounded-full p-0 bg-black text-white">
