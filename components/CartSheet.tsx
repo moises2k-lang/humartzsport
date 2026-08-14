@@ -43,88 +43,103 @@ export function CartSheet() {
         <SheetHeader>
           <SheetTitle>Tu Cesta</SheetTitle>
         </SheetHeader>
-        <div className="mt-6 flex h-[calc(100%-8rem)] flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           {items.length === 0 ? (
             <p className="text-muted-foreground">Tu cesta está vacía.</p>
           ) : (
-            <div className="flex-1 space-y-4 overflow-auto pr-2">
-              {items.map((item) => (
-                <div key={`${item.productId}-${item.variantId}`} className="flex gap-3">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-md border bg-muted">
-                    {item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                        sizes="64px"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-                        N/A
+            <>
+              <div className="flex-1 space-y-3 overflow-auto pr-1">
+                {items.map((item) => (
+                  <div
+                    key={`${item.productId}-${item.variantId}`}
+                    className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-sm"
+                  >
+                    <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border bg-muted">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                          N/A
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Link
+                        href={`/producto/${item.slug}`}
+                        className="font-medium line-clamp-1 hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                      <div className="text-sm text-muted-foreground">
+                        {[
+                          item.size ? `Talla: ${item.size}` : "",
+                          item.color ? `Color: ${item.color}` : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
                       </div>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <Link href={`/producto/${item.slug}`} className="font-medium hover:underline">
-                      {item.name}
-                    </Link>
-                    <div className="text-sm text-muted-foreground">
-                      {item.size && `Talla: ${item.size} `}
-                      {item.color && `Color: ${item.color}`}
+                      <div className="mt-2 flex items-center gap-2">
+                        <div className="flex items-center rounded-full border bg-background p-0.5">
+                          <Button
+                            variant="ghost"
+                            size="icon-xs"
+                            className="rounded-full"
+                            onClick={() =>
+                              updateQuantity(item.productId, item.variantId, item.quantity - 1)
+                            }
+                          >
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          <span className="w-6 text-center text-sm">{item.quantity}</span>
+                          <Button
+                            variant="ghost"
+                            size="icon-xs"
+                            className="rounded-full"
+                            onClick={() =>
+                              updateQuantity(item.productId, item.variantId, item.quantity + 1)
+                            }
+                          >
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="icon-xs"
+                          className="rounded-full text-destructive"
+                          onClick={() => removeItem(item.productId, item.variantId)}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="mt-1 flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={() =>
-                          updateQuantity(item.productId, item.variantId, item.quantity - 1)
-                        }
-                      >
-                        <Minus className="h-3 w-3" />
-                      </Button>
-                      <span className="w-4 text-center text-sm">{item.quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={() =>
-                          updateQuantity(item.productId, item.variantId, item.quantity + 1)
-                        }
-                      >
-                        <Plus className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 text-destructive"
-                        onClick={() => removeItem(item.productId, item.variantId)}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
+                    <div className="text-sm font-medium">
+                      {formatPrice(item.price * item.quantity)}
                     </div>
                   </div>
-                  <div className="text-sm font-medium">
-                    {formatPrice(item.price * item.quantity)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {items.length > 0 && (
-            <div className="border-t pt-4">
-              <div className="flex justify-between text-lg font-semibold">
-                <span>Total</span>
-                <span>{formatPrice(total)}</span>
+                ))}
               </div>
-              <Link
-                href="/checkout"
-                className={cn(buttonVariants({ variant: "default" }), "mt-4 w-full")}
-              >
-                Finalizar pedido
-              </Link>
-            </div>
+              <div className="rounded-xl border bg-card p-4 shadow-sm">
+                <div className="flex justify-between text-base font-semibold">
+                  <span>Total</span>
+                  <span>{formatPrice(total)}</span>
+                </div>
+                <Link
+                  href="/checkout"
+                  className={cn(
+                    buttonVariants({ variant: "default" }),
+                    "mt-4 w-full font-bold uppercase"
+                  )}
+                >
+                  Finalizar pedido
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </SheetContent>
