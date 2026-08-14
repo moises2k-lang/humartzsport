@@ -15,6 +15,15 @@ function placeholder(text: string, bg = "e5e7eb") {
   return `https://placehold.co/600x400/${bg}/374151.png?text=${encodeURIComponent(text)}`;
 }
 
+const categoryImageMap: Record<string, string> = {
+  Hombre: "/images/samples/hombre.png",
+  Mujer: "/images/samples/mujer.png",
+  Niños: "/images/samples/ninos.png",
+  Accesorios: "/images/samples/accesorios.png",
+  Running: "/images/samples/running.png",
+  Fútbol: "/images/samples/futbol.png",
+};
+
 const productTemplates = [
   {
     name: "Tenis Deportivo Air Run",
@@ -142,7 +151,7 @@ async function main() {
         description: `Producto de calidad para la categoría ${tpl.category}. Disponible en varias tallas y colores.`,
         price: new Prisma.Decimal(tpl.basePrice),
         comparePrice: new Prisma.Decimal(Math.round(tpl.basePrice * 1.2)),
-        image: placeholder(tpl.name),
+        image: categoryImageMap[tpl.category] || placeholder(tpl.name),
         isNew: tpl.isNew,
         isFree: tpl.isFree ?? false,
         isPublished: true,
