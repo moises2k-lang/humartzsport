@@ -2,9 +2,21 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import { useRouter } from "next/navigation";
-import { Search, Menu, ChevronDown, User } from "lucide-react";
+import {
+  Search,
+  Menu,
+  ChevronDown,
+  User,
+  Shirt,
+  Users,
+  Baby,
+  Footprints,
+  Trophy,
+  ShoppingBag,
+  Circle,
+} from "lucide-react";
 import { FacebookIcon, YoutubeIcon, TwitterIcon, InstagramIcon } from "@/components/SocialIcons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +37,20 @@ type CategoryNav = {
   parentId: string | null;
   children?: { id: string; name: string; slug: string }[];
 };
+
+const CATEGORY_ICONS: Record<string, ComponentType<{ className?: string }>> = {
+  hombre: Shirt,
+  mujer: Users,
+  ninos: Baby,
+  running: Footprints,
+  futbol: Trophy,
+  accesorios: ShoppingBag,
+};
+
+function CategoryIcon({ slug }: { slug: string }) {
+  const Icon = CATEGORY_ICONS[slug.toLowerCase()] || Circle;
+  return <Icon className="h-4 w-4 shrink-0" />;
+}
 
 export function Header({ categories }: { categories: CategoryNav[] }) {
   const [search, setSearch] = useState("");
@@ -74,9 +100,10 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
                 <Link
                   key={cat.id}
                   href={`/categoria/${cat.slug}`}
-                  className="text-sm font-medium"
+                  className="flex items-center gap-2 text-sm font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <CategoryIcon slug={cat.slug} />
                   {cat.name}
                 </Link>
               ))}
@@ -105,6 +132,7 @@ export function Header({ categories }: { categories: CategoryNav[] }) {
                 key={cat.id}
                 onSelect={() => router.push(`/categoria/${cat.slug}`)}
               >
+                <CategoryIcon slug={cat.slug} />
                 {cat.name}
               </DropdownMenuItem>
             ))}
